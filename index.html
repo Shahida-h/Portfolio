@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shahida Hossain — Teaching Notebook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sea-deep:   #123832;
+    --sea:        #2F7F68;
+    --sea-bright: #3FA588;
+    --sea-pale:   #DCEBE4;
+    --paper:      #F6F1E7;
+    --paper-dark: #ECE4D2;
+    --ink:        #1C2521;
+    --ink-soft:   #4B5750;
+    --tab1: #123832;
+    --tab2: #1F5B4E;
+    --tab3: #2F7F68;
+    --tab4: #4E9C82;
+    --tab5: #7BB79E;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+
+  h1,h2,h3{
+    font-family:'Fraunces', serif;
+    color:var(--sea-deep);
+    letter-spacing:-0.01em;
+  }
+
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.72rem;
+    text-transform:uppercase;
+    letter-spacing:0.14em;
+    color:var(--sea);
+    font-weight:600;
+  }
+
+  a{ color:inherit; }
+
+  /* ---------- Binder tab nav ---------- */
+  .binder-nav{
+    position:fixed;
+    top:0; left:0;
+    height:100vh;
+    width:64px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:14px;
+    z-index:100;
+  }
+  .binder-nav .tab{
+    width:64px;
+    padding:16px 8px;
+    border-radius:0 10px 10px 0;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-decoration:none;
+    box-shadow: 2px 3px 8px rgba(0,0,0,0.12);
+    transition: width 0.28s ease, transform 0.2s ease;
+    position:relative;
+  }
+  .binder-nav .tab span{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.68rem;
+    letter-spacing:0.08em;
+    color:var(--paper);
+    writing-mode:vertical-rl;
+    text-orientation:mixed;
+    white-space:nowrap;
+  }
+  .binder-nav .tab:hover{ width:96px; transform:translateX(4px); }
+  .binder-nav .tab.t1{ background:var(--tab1); }
+  .binder-nav .tab.t2{ background:var(--tab2); }
+  .binder-nav .tab.t3{ background:var(--tab3); }
+  .binder-nav .tab.t4{ background:var(--tab4); }
+  .binder-nav .tab.t5{ background:var(--tab5); }
+
+  @media (max-width:760px){
+    .binder-nav{
+      top:auto; bottom:0; left:0; right:0; height:auto; width:100%;
+      flex-direction:row; justify-content:space-around; padding:8px 6px;
+      background:var(--sea-deep);
+    }
+    .binder-nav .tab{
+      border-radius:10px 10px 0 0; width:auto; flex:1; padding:10px 4px;
+    }
+    .binder-nav .tab span{ writing-mode:horizontal-tb; font-size:0.6rem; }
+    .binder-nav .tab:hover{ width:auto; transform:translateY(-4px); }
+    main{ padding-bottom:70px; }
+  }
+
+  main{ margin-left:64px; }
+  @media (max-width:760px){ main{ margin-left:0; } }
+
+  section{ padding:110px 8vw; max-width:1100px; margin:0 auto; }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    min-height:92vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    position:relative;
+    padding-top:80px;
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    top:0; right:-10%;
+    width:60%; height:100%;
+    background:
+      repeating-linear-gradient(transparent, transparent 38px, rgba(47,127,104,0.09) 39px, rgba(47,127,104,0.09) 40px);
+    pointer-events:none;
+  }
+  .hero .eyebrow{ margin-bottom:18px; opacity:0; animation:riseIn 0.7s ease forwards 0.1s; }
+  .hero h1{
+    font-size:clamp(2.6rem, 6vw, 4.6rem);
+    font-weight:600;
+    max-width:11ch;
+    opacity:0; animation:riseIn 0.7s ease forwards 0.25s;
+  }
+  .hero .role-line{
+    margin-top:22px;
+    font-size:1.15rem;
+    color:var(--ink-soft);
+    max-width:46ch;
+    opacity:0; animation:riseIn 0.7s ease forwards 0.4s;
+  }
+  .hero .stat-row{
+    margin-top:44px;
+    display:flex;
+    gap:44px;
+    flex-wrap:wrap;
+    opacity:0; animation:riseIn 0.7s ease forwards 0.55s;
+  }
+  .hero .stat b{
+    display:block;
+    font-family:'Fraunces', serif;
+    font-size:2.1rem;
+    color:var(--sea-deep);
+  }
+  .hero .stat small{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.68rem;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:var(--ink-soft);
+  }
+
+  @keyframes riseIn{
+    from{ opacity:0; transform:translateY(16px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+
+  /* ---------- Reveal on scroll ---------- */
+  .reveal{ opacity:0; transform:translateY(24px); transition:opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  /* ---------- About ---------- */
+  .about-grid{
+    display:grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap:60px;
+    align-items:start;
+  }
+  @media (max-width:760px){ .about-grid{ grid-template-columns:1fr; } }
+  .about-grid p{ color:var(--ink-soft); margin-top:18px; }
+  .approach-list{ list-style:none; margin-top:26px; }
+  .approach-list li{
+    padding:16px 0;
+    border-top:1px solid rgba(18,56,50,0.14);
+    display:flex; gap:16px;
+  }
+  .approach-list li:last-child{ border-bottom:1px solid rgba(18,56,50,0.14); }
+  .approach-list .mark{
+    font-family:'IBM Plex Mono', monospace;
+    color:var(--sea);
+    font-weight:600;
+    flex-shrink:0;
+  }
+
+  /* ---------- Toolkit ---------- */
+  .toolkit-head{ display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:20px; }
+  .counter-box{ text-align:right; font-family:'IBM Plex Mono', monospace; }
+  .counter-box b{ font-size:1.6rem; color:var(--sea-deep); font-family:'Fraunces', serif; }
+
+  .filter-row{ display:flex; gap:10px; flex-wrap:wrap; margin:34px 0 28px; }
+  .filter-btn{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.72rem;
+    letter-spacing:0.04em;
+    padding:8px 16px;
+    border-radius:20px;
+    border:1px solid var(--sea);
+    background:transparent;
+    color:var(--sea-deep);
+    cursor:pointer;
+    transition:background 0.2s ease, color 0.2s ease;
+  }
+  .filter-btn.active, .filter-btn:hover{ background:var(--sea); color:var(--paper); }
+
+  .card-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(230px, 1fr));
+    gap:20px;
+  }
+  .card{
+    background:var(--paper-dark);
+    border-radius:4px 14px 4px 14px;
+    padding:22px;
+    border-left:4px solid var(--sea);
+    transition:transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .card:hover{ transform:translateY(-5px); box-shadow:0 12px 24px rgba(18,56,50,0.14); }
+  .card .tag{
+    display:inline-block;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.62rem;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    color:var(--sea);
+    margin-bottom:10px;
+  }
+  .card h3{ font-size:1.05rem; margin-bottom:8px; }
+  .card p{ font-size:0.9rem; color:var(--ink-soft); }
+  .card.hidden{ display:none; }
+
+  /* ---------- Journal ---------- */
+  .journal-item{
+    display:grid;
+    grid-template-columns:120px 1fr;
+    gap:26px;
+    padding:26px 0;
+    border-top:1px dashed rgba(18,56,50,0.25);
+  }
+  .journal-item:last-child{ border-bottom:1px dashed rgba(18,56,50,0.25); }
+  .journal-item time{ font-family:'IBM Plex Mono', monospace; font-size:0.75rem; color:var(--sea); }
+  .journal-item p{ color:var(--ink-soft); margin-top:6px; }
+  @media (max-width:600px){ .journal-item{ grid-template-columns:1fr; gap:6px; } }
+
+  /* ---------- Contact ---------- */
+  .contact-box{
+    background:var(--sea-deep);
+    color:var(--paper);
+    border-radius:18px;
+    padding:56px 8vw;
+    margin:0 8vw;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:50px;
+  }
+  @media (max-width:760px){ .contact-box{ grid-template-columns:1fr; margin:0 4vw; padding:44px 6vw; } }
+  .contact-box h2{ color:var(--paper); }
+  .contact-box .eyebrow{ color:var(--sea-bright); }
+  form{ display:flex; flex-direction:column; gap:14px; }
+  input, textarea{
+    background:rgba(246,241,231,0.08);
+    border:1px solid rgba(246,241,231,0.28);
+    border-radius:8px;
+    padding:12px 14px;
+    color:var(--paper);
+    font-family:'Inter', sans-serif;
+    font-size:0.92rem;
+  }
+  input::placeholder, textarea::placeholder{ color:rgba(246,241,231,0.5); }
+  textarea{ resize:vertical; min-height:90px; }
+  button.submit{
+    margin-top:6px;
+    background:var(--sea-bright);
+    color:var(--sea-deep);
+    border:none;
+    padding:13px 20px;
+    border-radius:8px;
+    font-weight:600;
+    cursor:pointer;
+    font-family:'Inter', sans-serif;
+    transition:transform 0.15s ease;
+  }
+  button.submit:hover{ transform:translateY(-2px); }
+  .form-msg{ font-family:'IBM Plex Mono', monospace; font-size:0.75rem; min-height:18px; color:var(--sea-bright); }
+
+  footer{
+    text-align:center;
+    padding:40px 8vw 100px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.72rem;
+    color:var(--ink-soft);
+  }
+
+  :focus-visible{ outline:2px solid var(--sea-bright); outline-offset:3px; }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.01ms !important; transition-duration:0.01ms !important; scroll-behavior:auto !important; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="binder-nav" aria-label="Section navigation">
+  <a class="tab t1" href="#hero"><span>Intro</span></a>
+  <a class="tab t2" href="#about"><span>About</span></a>
+  <a class="tab t3" href="#toolkit"><span>Toolkit</span></a>
+  <a class="tab t4" href="#journal"><span>Journal</span></a>
+  <a class="tab t5" href="#contact"><span>Contact</span></a>
+</nav>
+
+<main>
+
+  <section class="hero" id="hero">
+    <p class="eyebrow">Teaching Notebook · Year 2</p>
+    <h1>Shahida Hossain, building better lessons one term at a time.</h1>
+    <p class="role-line">I teach [Subject / Grade Level] and spend as much time collecting new methods as I do using them — this notebook is where both live.</p>
+    <div class="stat-row">
+      <div class="stat"><b>2</b><small>Years teaching</small></div>
+      <div class="stat"><b id="ideaCount">0</b><small>Methods logged</small></div>
+      <div class="stat"><b>[X]</b><small>Students reached</small></div>
+    </div>
+  </section>
+
+  <section id="about">
+    <p class="eyebrow reveal">About</p>
+    <div class="about-grid">
+      <div class="reveal">
+        <h2>Two years in, still taking notes.</h2>
+        <p>I started teaching [Subject] in [Year], and the biggest lesson so far is that no single method works for every room. This site is part portfolio, part running notebook — the approaches, tools, and small experiments I keep coming back to, and the ones I'm still testing.</p>
+        <p>Outside of lesson planning, I spend a lot of time reading about classroom research and trying out ideas other teachers have shared — then writing down what actually held up in front of real students.</p>
+      </div>
+      <ul class="approach-list reveal">
+        <li><span class="mark">01</span><span>Start from the misconception, not the answer — plan around what students already (wrongly) believe.</span></li>
+        <li><span class="mark">02</span><span>Every lesson gets one low-stakes check for understanding before it ends.</span></li>
+        <li><span class="mark">03</span><span>Borrow a method, adapt it in week one, keep only what survives week three.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="toolkit">
+    <div class="toolkit-head reveal">
+      <div>
+        <p class="eyebrow">Teaching Toolkit</p>
+        <h2>Methods worth keeping</h2>
+      </div>
+      <div class="counter-box">
+        <b id="toolkitCount">0</b><br>ideas collected so far
+      </div>
+    </div>
+
+    <div class="filter-row reveal" id="filterRow">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="active">Active Learning</button>
+      <button class="filter-btn" data-filter="assess">Assessment</button>
+      <button class="filter-btn" data-filter="edtech">EdTech</button>
+      <button class="filter-btn" data-filter="sel">Classroom & SEL</button>
+    </div>
+
+    <div class="card-grid" id="cardGrid">
+      <div class="card reveal" data-cat="active"><span class="tag">Active Learning</span><h3>Think–Pair–Share, timed</h3><p>Two minutes silent, two minutes paired, then cold-call — keeps the "share" part honest.</p></div>
+      <div class="card reveal" data-cat="assess"><span class="tag">Assessment</span><h3>Exit ticket, one question</h3><p>A single question tied directly to today's objective, read before the next class starts.</p></div>
+      <div class="card reveal" data-cat="edtech"><span class="tag">EdTech</span><h3>Live quiz polling</h3><p>A 60-second poll mid-lesson to catch confusion before it compounds.</p></div>
+      <div class="card reveal" data-cat="sel"><span class="tag">Classroom & SEL</span><h3>Two-minute check-in</h3><p>Quick mood check at the door — changes how I pace the first ten minutes.</p></div>
+      <div class="card reveal" data-cat="active"><span class="tag">Active Learning</span><h3>Jigsaw reading</h3><p>Split a text into parts, each group becomes the "expert" on one section.</p></div>
+      <div class="card reveal" data-cat="assess"><span class="tag">Assessment</span><h3>Self-graded warm-ups</h3><p>Students mark their own warm-up against a posted key — frees me to circulate instead.</p></div>
+      <div class="card reveal" data-cat="edtech"><span class="tag">EdTech</span><h3>Shared class notes doc</h3><p>One collaborative doc per unit; absent students never fall behind on notes.</p></div>
+      <div class="card reveal" data-cat="sel"><span class="tag">Classroom & SEL</span><h3>Choice in seating</h3><p>Letting groups self-select once a week measurably cut down on minor disruptions.</p></div>
+    </div>
+  </section>
+
+  <section id="journal">
+    <p class="eyebrow reveal">Journal</p>
+    <h2 class="reveal">Recently gathered</h2>
+
+    <div class="journal-item reveal">
+      <time>[Month Year]</time>
+      <div><h3>Trying retrieval practice at the start of class</h3><p>Swapped the usual warm-up for a 5-minute low-stakes recall quiz — early read is that it's helping with the unit test scores.</p></div>
+    </div>
+    <div class="journal-item reveal">
+      <time>[Month Year]</time>
+      <div><h3>A better rubric for group projects</h3><p>Rewrote the group-work rubric so individual contribution is scored separately from the final product.</p></div>
+    </div>
+    <div class="journal-item reveal">
+      <time>[Month Year]</time>
+      <div><h3>What I'm reading next</h3><p>Working through a few books on formative assessment — notes to come once I've tried the ideas in class.</p></div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="contact-box reveal">
+      <div>
+        <p class="eyebrow">Get in touch</p>
+        <h2>Let's talk teaching.</h2>
+        <p style="margin-top:14px; color:rgba(246,241,231,0.75);">Open to collaboration, guest lessons, or just swapping notes on what's working in your classroom.</p>
+      </div>
+      <form id="contactForm">
+        <input type="text" id="nameInput" placeholder="Your name" required>
+        <input type="email" id="emailInput" placeholder="Your email" required>
+        <textarea id="msgInput" placeholder="Your message" required></textarea>
+        <button type="submit" class="submit">Send message</button>
+        <p class="form-msg" id="formMsg"></p>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    © <span id="year"></span> Shahida Hossain — Teaching Notebook. Built with sea green and good intentions.
+  </footer>
+
+</main>
+
+<script>
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+
+  // Toolkit filter
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.card');
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.filter;
+      cards.forEach(card => {
+        card.classList.toggle('hidden', f !== 'all' && card.dataset.cat !== f);
+      });
+    });
+  });
+
+  // Animated counters (hero + toolkit), triggered once visible
+  function animateCount(el, target, duration){
+    let start = null;
+    function step(ts){
+      if(!start) start = ts;
+      const progress = Math.min((ts - start) / duration, 1);
+      el.textContent = Math.floor(progress * target);
+      if(progress < 1) requestAnimationFrame(step);
+      else el.textContent = target;
+    }
+    requestAnimationFrame(step);
+  }
+  const totalIdeas = document.querySelectorAll('.card').length * 16; // sample running total
+  const heroCounter = document.getElementById('ideaCount');
+  const toolkitCounter = document.getElementById('toolkitCount');
+  let counted = false;
+  const countObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting && !counted){
+        counted = true;
+        animateCount(heroCounter, totalIdeas, 1100);
+        animateCount(toolkitCounter, totalIdeas, 1100);
+      }
+    });
+  }, { threshold: 0.3 });
+  countObserver.observe(document.getElementById('toolkit'));
+
+  // Contact form (front-end only demo)
+  const form = document.getElementById('contactForm');
+  const formMsg = document.getElementById('formMsg');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    formMsg.textContent = 'Message noted — connect this form to an email service to receive it.';
+    form.reset();
+  });
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
